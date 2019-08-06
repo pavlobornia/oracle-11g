@@ -4,15 +4,22 @@ Image for running Oracle Database 11g Standard/Enterprise. Due to oracle license
 
 # Usage
 Download database installation files from [Oracle site](http://www.oracle.com/technetwork/database/in-memory/downloads/index.html) and unpack them to **install_folder**.
+
+Build container
+```sh
+docker build -t oracle11g-aqa .
+```
+
+Optionally: Place user scripts to **init** folder.
+Optionally: Place dump file to **local_dump** folder.
+
 Run container and it will install oracle and create database:
 
 ```sh
-docker run --privileged --name oracle11g -p 1521:1521 -v <install_folder>:/install jaspeen/oracle-11g
+chmod +x run_oracle_11g.sh
+./run_oracle_11g.sh
 ```
-Then you can commit this container to have installed and configured oracle database:
-```sh
-docker commit oracle11g oracle11g-installed
-```
+
 
 Database located in **/opt/oracle** folder
 
@@ -22,12 +29,11 @@ OS users:
 
 DB users:
 * SYS/oracle
+* system/oracle
 
-Optionally you can map dpdump folder to easy upload dumps:
+Optionally you can run sql commands:
 ```sh
-docker run --privileged --name oracle11g -p 1521:1521 -v <install_folder>:/install -v <local_dpdump>:/opt/oracle/dpdump jaspeen/oracle-11g
-```
-To execute impdp/expdp just use docker exec command:
-```sh
-docker exec -it oracle11g impdp ..
+su - oracle
+sqlplus system/oracle@localhost:1521/orcl
+sql>
 ```
