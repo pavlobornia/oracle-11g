@@ -10,8 +10,9 @@ Build container
 docker build -t oracle11g-aqa .
 ```
 
-Optionally: Place user scripts to **init** folder.
-Optionally: Place dump file to **local_dump** folder.
+Optionally:
+* Place user scripts to **init** folder.
+* Place dump file to **local_dump** folder.
 
 Run container and it will install oracle and create database:
 
